@@ -36,7 +36,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
             @Override
             public void onItemsLoaded(List<Item> items) {
 
-                if (items!= null && items.size() == 0){
+                if (items.size() == 0){
                     mCountersView.showNoItems();
 
                 }
@@ -57,8 +57,8 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     }
 
     @Override
-    public void loadItems() {
-
+    public void searchItems() {
+    //TODO implementation
         dataSource.getItems(callback);
 
     }
@@ -66,7 +66,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     @Override
     public void start() {
 
-        loadItems();
+        searchItems();
 
     }
 }

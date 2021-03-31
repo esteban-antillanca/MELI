@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
-import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.eantillanca.melimasterdetailexample.R;
 import com.eantillanca.melimasterdetailexample.data.Item;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,7 +32,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     private ItemListContract.Presenter mPresenter;
 
-    private CounterAdapter mListAdapter;
+    private ItemAdapter mListAdapter;
 
     private RelativeLayout itemsL;
 
@@ -53,7 +51,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new CounterAdapter(new ArrayList<>(0), getContext());
+        mListAdapter = new ItemAdapter(new ArrayList<>(0), getContext());
 
     }
 
@@ -72,13 +70,13 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        View root = inflater.inflate(R.layout.counter_list_frag, container, false);
+        View root = inflater.inflate(R.layout.item_list_frag, container, false);
 
-        itemsL = root.findViewById(R.id.countersL);
+        itemsL = root.findViewById(R.id.itemsL);
 
         noItemsL = root.findViewById(R.id.no_items_l);
 
-        listView = root.findViewById(R.id.counters_list);
+        listView = root.findViewById(R.id.items_list);
         LinearLayoutManager llManager = new LinearLayoutManager(getContext());
         listView.setLayoutManager(llManager);
         listView.setAdapter(mListAdapter);
@@ -114,14 +112,12 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
 
-    private static class CounterAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private static class ItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<Item> mItems;
         private Context context;
-        private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-
-        public CounterAdapter(List<Item> items , Context context) {
+        public ItemAdapter(List<Item> items , Context context) {
             setList(items);
             this.context = context;
         }
@@ -162,17 +158,15 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.counter_item, parent,false));
+            return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item, parent,false));
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
             Item item = mItems.get(position);
-            viewBinderHelper.setOpenOnlyOne(true);
-            viewBinderHelper.bind(holder.swipeRevealLayout, item.getID());
-            holder.counterTV.setText(item.getTitle());
-            holder.counterNumber.setText(item.getCount() + "");
+            holder.itemTitle.setText(item.getTitle());
+            holder.itemPrice.setText(item.getPrice());
 
         }
 
@@ -190,22 +184,29 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     public interface CounterItemListener {
 
+        //TODO Implementation
+        /*
         void onIncCLick(Item incItem, int position);
         void onDecClick(Item decItem, int position);
         void onDelClick(Item delItem, int position);
 
+         */
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView counterTV;
-        private TextView counterNumber;
-        private SwipeRevealLayout swipeRevealLayout;
+        private TextView itemTitle;
+
+        private TextView itemPrice;
+
+        private RelativeLayout relativeLayout;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            this.counterTV = view.findViewById(R.id.counter_label);
-            this.counterNumber = view.findViewById(R.id.counter_number);
-            this.swipeRevealLayout = view.findViewById(R.id.swipeRevealLayout);
+            this.itemTitle = view.findViewById(R.id.item_title);
+            this.itemPrice = view.findViewById(R.id.item_price);
+            this.relativeLayout = view.findViewById(R.id.rlayitem);
         }
+
     }
 }

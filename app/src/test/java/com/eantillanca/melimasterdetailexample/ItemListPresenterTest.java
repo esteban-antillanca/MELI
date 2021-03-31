@@ -19,7 +19,6 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -54,7 +53,7 @@ public class ItemListPresenterTest {
 
     @Test
     public void fetchValidDataShouldLoadIntoView(){
-        presenter.loadItems();
+        presenter.searchItems();
         verify(dataSource,times(1)).getItems(argumentCaptor.capture());
         argumentCaptor.getValue().onItemsLoaded(getList());
 
@@ -69,7 +68,7 @@ public class ItemListPresenterTest {
 
     @Test
     public void emptyListShouldShowError(){
-        presenter.loadItems();;
+        presenter.searchItems();;
         verify(dataSource,times(1)).getItems(argumentCaptor.capture());
         argumentCaptor.getValue().onItemsLoaded(new ArrayList<>());
         verify(view).showNoItems();
@@ -77,7 +76,7 @@ public class ItemListPresenterTest {
 
     @Test
     public void noConnectionShouldShowError(){
-        presenter.loadItems();
+        presenter.searchItems();
         verify(dataSource,times(1)).getItems(argumentCaptor.capture());
         argumentCaptor.getValue().onDataNotAvailable();
         verify(view).showLoadingItemsError();

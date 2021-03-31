@@ -13,12 +13,17 @@ public final class Item {
     @SerializedName("title")
     private final String title;
 
-    @SerializedName("count")
-    private int count = 0;
+    @SerializedName("price")
+    private final String price;
 
-    public Item(String title, String id) {
+    @SerializedName("thumbnail")
+    private final String thumbnail;
+
+    public Item(String title, String id, String price, String thumbnail) {
         this.title = title;
         this.id = id;
+        this.price = price;
+        this.thumbnail = thumbnail;
     }
 
     public String getTitle(){
@@ -29,9 +34,9 @@ public final class Item {
         return this.id;
     }
 
-    public int getCount(){
-        return count;
-    }
+    public String getPrice() { return price; }
+
+    public String getThumbnail() { return thumbnail; }
 
 
 }

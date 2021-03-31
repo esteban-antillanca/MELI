@@ -1,15 +1,16 @@
 package com.eantillanca.melimasterdetailexample.data;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
-import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Esteban Antillanca on 2020-01-08.
@@ -32,16 +33,21 @@ public class ItemRemoteDataSource implements ItemDataSource {
     public void getItems(final LoadItemsCallback callback) {
 
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<Item>> call = service.getCounters();
-        call.enqueue(new Callback<List<Item>>(){
+        Call<JsonObject> call = service.getItems("Motorola%20G6");
+        call.enqueue(new Callback<JsonObject>(){
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response){
-                callback.onItemsLoaded(response.body());
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+               // callback.onItemsLoaded(response.body());
+                System.out.println(response.body().toString());
+
+
 
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                System.out.println(call.toString());
+                System.out.println(t.toString());
 
                 callback.onDataNotAvailable();
 
@@ -55,24 +61,9 @@ public class ItemRemoteDataSource implements ItemDataSource {
 
     public interface GetDataService {
 
-        @GET("/api/v1/counters")
-        Call<List<Item>> getCounters();
+        @GET("/sites/MLA/search?")
+        Call<JsonObject> getItems(@Query("q") String query);
 
-        @FormUrlEncoded
-        @POST("/api/v1/counter")
-        Call<List<Item>> createCounter(@Field("title") String title);
-
-        @FormUrlEncoded
-        @POST("/api/v1/counter/inc")
-        Call<List<Item>> incCounter(@Field("id") String id);
-
-        @FormUrlEncoded
-        @POST("/api/v1/counter/dec")
-        Call<List<Item>> decCounter(@Field("id") String id);
-
-        @FormUrlEncoded
-        @HTTP(method = "DELETE", path = "/api/v1/counter", hasBody = true)
-        Call<List<Item>> delCounter(@Field("id") String id);
 
     }
 }
