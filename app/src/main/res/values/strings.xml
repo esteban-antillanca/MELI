@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MELI master detail example</string>
+    <string name="action_settings">Settings</string>
+    <string name="total_sum">Total: </string>
+    <string name="total_sum_init">0</string>
+    <string name="no_counters">There\'s no items added yet!</string>
+    <string name="input_counter_hint">Add a item...</string>
+    <string name="add_counter_button_text">Add</string>
+    <string name="add_counter_no_title_err">Counter name cannot be empty!</string>
+    <string name="add_counter_duplicate_err">That item is already created!</string>
+    <string name="network_error">No network connection detected. Please review your device\'s network status</string>
+</resources>
