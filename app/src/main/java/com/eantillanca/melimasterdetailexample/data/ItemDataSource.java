@@ -14,7 +14,7 @@ public interface ItemDataSource {
         void onDataNotAvailable();
     }
 
-    void getItems(LoadItemsCallback callback);
+    void getItems(LoadItemsCallback callback, String query);
 
 
 

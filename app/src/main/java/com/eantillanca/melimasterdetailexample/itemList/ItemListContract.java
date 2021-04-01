@@ -21,7 +21,7 @@ public interface ItemListContract {
 
     interface Presenter extends BasePresenter {
 
-        void searchItems();
+        void searchItems(String query);
 
 
 

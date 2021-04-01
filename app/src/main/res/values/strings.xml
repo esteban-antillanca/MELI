@@ -2,4 +2,5 @@
     <string name="app_name">MELI Test</string>
     <string name="network_error">No network connection detected. Please review your device\'s network status</string>
     <string name="search_title">Search Title</string>
+    <string name="search_hint">Enter your search! anything you want</string>
 </resources>

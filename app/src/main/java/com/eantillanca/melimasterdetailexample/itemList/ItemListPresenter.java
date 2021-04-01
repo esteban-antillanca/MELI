@@ -57,16 +57,14 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     }
 
     @Override
-    public void searchItems() {
+    public void searchItems(String query) {
     //TODO implementation
-        dataSource.getItems(callback);
+        dataSource.getItems(callback, query);
 
     }
 
     @Override
     public void start() {
-
-        searchItems();
 
     }
 }
