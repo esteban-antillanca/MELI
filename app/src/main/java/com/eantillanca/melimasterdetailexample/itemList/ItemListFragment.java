@@ -2,9 +2,12 @@ package com.eantillanca.melimasterdetailexample.itemList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,13 +19,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.eantillanca.melimasterdetailexample.R;
 import com.eantillanca.melimasterdetailexample.data.Item;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -39,6 +45,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     private RelativeLayout noItemsL;
 
     private RecyclerView listView;
+
+    private EditText searchEditText;
 
     public ItemListFragment(){
         //Empty constructor
@@ -83,6 +91,17 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(listView.getContext(),llManager.getOrientation());
         listView.addItemDecoration(mDividerItemDecoration);
+
+        searchEditText = this.getActivity().findViewById(R.id.search_edit_text);
+        searchEditText.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                mPresenter.searchItems(searchEditText.getText().toString());
+                return true;
+            }
+            return false;
+        });
 
 
         return root;
@@ -167,6 +186,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             Item item = mItems.get(position);
             holder.itemTitle.setText(item.getTitle());
             holder.itemPrice.setText(item.getPrice());
+            Glide
+                    .with(context)
+                    .load(item.getThumbnail().trim())
+                    .into(holder.thumbnail);
 
         }
 
@@ -199,13 +222,14 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         private TextView itemPrice;
 
-        private RelativeLayout relativeLayout;
+        private ImageView thumbnail;
+
 
         public ViewHolder(@NonNull View view) {
             super(view);
             this.itemTitle = view.findViewById(R.id.item_title);
             this.itemPrice = view.findViewById(R.id.item_price);
-            this.relativeLayout = view.findViewById(R.id.rlayitem);
+            this.thumbnail = view.findViewById(R.id.item_thumbnail);
         }
 
     }

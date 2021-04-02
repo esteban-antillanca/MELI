@@ -50,14 +50,19 @@ public class ItemRemoteDataSource implements ItemDataSource {
         call.enqueue(new Callback<JsonObject>(){
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
-                System.out.println(response.body().toString());
                     JsonArray items_array = response.body().getAsJsonArray("results");
                     ArrayList<Item> items = new ArrayList<Item>();
 
                     for (int i = 0; i < items_array.size(); i++)
                     {
                         JsonObject objectInArray = items_array.get(i).getAsJsonObject();
-                        Item new_item = new Item(objectInArray.get("title").toString(),objectInArray.get("id").toString(),objectInArray.get("price").toString(),objectInArray.get("thumbnail").toString());
+                        //no tan bonita manipulación para la URL
+
+                        String thumbnail = objectInArray.get("thumbnail").toString().replaceFirst("http","https");
+
+
+
+                        Item new_item = new Item(objectInArray.get("title").toString(),objectInArray.get("id").toString(),objectInArray.get("price").toString(),thumbnail);
                         items.add(new_item);
                     }
 

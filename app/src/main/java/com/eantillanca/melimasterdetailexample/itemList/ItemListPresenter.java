@@ -19,7 +19,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     private final ItemRemoteDataSource dataSource;
 
-    private final ItemListContract.View mCountersView;
+    private final ItemListContract.View mItemsView;
 
 
 
@@ -28,20 +28,20 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     public ItemListPresenter(@NonNull ItemRemoteDataSource dataSource, @NonNull ItemListContract.View view) {
         this.dataSource = checkNotNull(dataSource);
-        this.mCountersView = checkNotNull(view);
+        this.mItemsView = checkNotNull(view);
 
-        mCountersView.setPresenter(this);
+        mItemsView.setPresenter(this);
 
         callback = new ItemDataSource.LoadItemsCallback() {
             @Override
             public void onItemsLoaded(List<Item> items) {
 
                 if (items.size() == 0){
-                    mCountersView.showNoItems();
+                    mItemsView.showNoItems();
 
                 }
                 else {
-                    mCountersView.showItems(items);
+                    mItemsView.showItems(items);
                 }
 
             }
@@ -49,8 +49,8 @@ public class ItemListPresenter implements ItemListContract.Presenter {
             @Override
             public void onDataNotAvailable() {
 
-                mCountersView.showLoadingItemsError();
-                mCountersView.showNoItems();
+                mItemsView.showLoadingItemsError();
+                mItemsView.showNoItems();
             }
 
         };
