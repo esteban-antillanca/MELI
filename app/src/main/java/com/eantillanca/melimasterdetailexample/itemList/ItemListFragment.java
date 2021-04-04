@@ -1,6 +1,7 @@
 package com.eantillanca.melimasterdetailexample.itemList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.eantillanca.melimasterdetailexample.R;
 import com.eantillanca.melimasterdetailexample.data.Item;
+import com.eantillanca.melimasterdetailexample.itemDetail.ItemDetailActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.net.URL;
@@ -48,6 +51,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     private EditText searchEditText;
 
+    private ProgressBar spinner;
+
     public ItemListFragment(){
         //Empty constructor
     }
@@ -59,7 +64,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<>(0), getContext());
+        mListAdapter = new ItemAdapter(new ArrayList<>(0), getContext(), mPresenter);
 
     }
 
@@ -91,6 +96,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(listView.getContext(),llManager.getOrientation());
         listView.addItemDecoration(mDividerItemDecoration);
+
+        spinner = root.findViewById(R.id.loading_spinner);
 
         searchEditText = this.getActivity().findViewById(R.id.search_edit_text);
         searchEditText.setOnKeyListener((v, keyCode, event) -> {
@@ -130,15 +137,36 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
+    @Override
+    public void showLoadingIndicator(Boolean loading) {
+
+        if (loading) {
+            spinner.setVisibility(View.VISIBLE);
+        } else {
+            spinner.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    @Override
+    public void showItemDetail(Bundle b) {
+        Intent intent = new Intent(getContext(), ItemDetailActivity.class);
+        intent.putExtras(b);
+        startActivity(intent);
+
+    }
+
 
     private static class ItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<Item> mItems;
         private Context context;
+        private ItemListContract.Presenter mPresenter;
 
-        public ItemAdapter(List<Item> items , Context context) {
+        public ItemAdapter(List<Item> items , Context context, ItemListContract.Presenter mPresenter) {
             setList(items);
             this.context = context;
+            this.mPresenter = mPresenter;
         }
 
         private void replaceData(List<Item> items) {
@@ -146,32 +174,9 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             notifyDataSetChanged();
         }
 
-        private void addItem(Item item){
-            mItems.add(item);
-        }
-
-        private void removeItem(int position){
-            mItems.remove(position);
-        }
-
-        private int getDataSetSize(){
-            return mItems.size();
-        }
-
-        private void setItemAtPosition(int position, Item item){
-            mItems.set(position, item);
-        }
-
-        private List<Item> getData(){
-            return mItems;
-        }
-
-
         private void setList(List<Item> items) {
             mItems = checkNotNull(items);
         }
-
-
 
         @NonNull
         @Override
@@ -186,9 +191,11 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             Item item = mItems.get(position);
             holder.itemTitle.setText(item.getTitle());
             holder.itemPrice.setText(item.getPrice());
+            holder.relativeLayout.setOnClickListener(v -> mPresenter.prepareItemDetail(item));
             Glide
                     .with(context)
                     .load(item.getThumbnail().trim())
+                    .placeholder(R.drawable.fogg_640)
                     .into(holder.thumbnail);
 
         }
@@ -224,12 +231,15 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         private ImageView thumbnail;
 
+        private RelativeLayout relativeLayout;
+
 
         public ViewHolder(@NonNull View view) {
             super(view);
             this.itemTitle = view.findViewById(R.id.item_title);
             this.itemPrice = view.findViewById(R.id.item_price);
             this.thumbnail = view.findViewById(R.id.item_thumbnail);
+            this.relativeLayout = view.findViewById(R.id.rlayitem);
         }
 
     }

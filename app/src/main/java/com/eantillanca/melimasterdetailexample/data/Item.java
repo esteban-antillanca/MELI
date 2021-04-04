@@ -19,11 +19,23 @@ public final class Item {
     @SerializedName("thumbnail")
     private final String thumbnail;
 
-    public Item(String title, String id, String price, String thumbnail) {
+    @SerializedName("nick_name")
+    private final String sellerName;
+
+    @SerializedName("completed")
+    private final String qtySells;
+
+    @SerializedName("condition")
+    private final String condition;
+
+    public Item(String title, String id, String price, String thumbnail, String sellerName, String qtySells, String condition) {
         this.title = title;
         this.id = id;
         this.price = price;
         this.thumbnail = thumbnail;
+        this.sellerName = sellerName;
+        this.qtySells = qtySells;
+        this.condition = condition;
     }
 
     public String getTitle(){
@@ -37,6 +49,12 @@ public final class Item {
     public String getPrice() { return price; }
 
     public String getThumbnail() { return thumbnail; }
+
+    public String getSellerName() { return sellerName; }
+
+    public String getQtySells() { return qtySells; }
+
+    public String getCondition() { return condition; }
 
 
 }

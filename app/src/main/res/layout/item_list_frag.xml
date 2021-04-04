@@ -21,6 +21,14 @@
                 android:layout_alignParentTop="true"
                 />
         </RelativeLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/blue_600"
+        android:id="@+id/loading_spinner"
+        android:visibility="invisible"
+        />
 
     <RelativeLayout
         android:id="@+id/no_items_l"
@@ -33,9 +41,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cherry_list_is_empty_1"
             android:layout_centerInParent="true"
             android:id="@+id/no_counters_img"/>
-
     </RelativeLayout>
 </RelativeLayout>

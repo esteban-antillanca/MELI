@@ -1,6 +1,8 @@
 package com.eantillanca.melimasterdetailexample.itemList;
 
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import com.eantillanca.melimasterdetailexample.data.Item;
@@ -44,6 +46,8 @@ public class ItemListPresenter implements ItemListContract.Presenter {
                     mItemsView.showItems(items);
                 }
 
+                mItemsView.showLoadingIndicator(false);
+
             }
 
             @Override
@@ -59,7 +63,25 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     @Override
     public void searchItems(String query) {
     //TODO implementation
+        mItemsView.showLoadingIndicator(true);
         dataSource.getItems(callback, query);
+
+    }
+
+    @Override
+    public void prepareItemDetail(Item item) {
+
+        Bundle b = new Bundle();
+        b.putString("title", item.getTitle());
+        b.putString("id", item.getTitle());
+        b.putString("price", item.getPrice());
+        b.putString("thumbnail", item.getThumbnail());
+        b.putString("sellerName", item.getSellerName());
+        b.putString("qtySells", item.getQtySells());
+        b.putString("condition", item.getCondition());
+
+        mItemsView.showItemDetail(b);
+
 
     }
 

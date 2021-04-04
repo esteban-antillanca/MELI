@@ -56,13 +56,15 @@ public class ItemRemoteDataSource implements ItemDataSource {
                     for (int i = 0; i < items_array.size(); i++)
                     {
                         JsonObject objectInArray = items_array.get(i).getAsJsonObject();
-                        //no tan bonita manipulación para la URL
+                        String title = objectInArray.get("title").toString();
+                        String id = objectInArray.get("id").toString();
+                        String price = objectInArray.get("price").toString();
+                        String thumbnail = objectInArray.get("thumbnail").toString();
+                        String sellerName = objectInArray.getAsJsonObject("seller").getAsJsonObject("eshop").get("nick_name").toString();
+                        String qtySell = objectInArray.getAsJsonObject("seller").getAsJsonObject("seller_reputation").getAsJsonObject("transactions").get("completed").toString();;
+                        String condition = objectInArray.get("condition").toString().equals("new")? "Nuevo" : "Usado";
 
-                        String thumbnail = objectInArray.get("thumbnail").toString().replaceFirst("http","https");
-
-
-
-                        Item new_item = new Item(objectInArray.get("title").toString(),objectInArray.get("id").toString(),objectInArray.get("price").toString(),thumbnail);
+                        Item new_item = new Item(title,id,price,thumbnail, sellerName, qtySell, condition);
                         items.add(new_item);
                     }
 

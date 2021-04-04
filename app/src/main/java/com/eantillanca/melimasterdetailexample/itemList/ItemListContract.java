@@ -1,5 +1,7 @@
 package com.eantillanca.melimasterdetailexample.itemList;
 
+import android.os.Bundle;
+
 import com.eantillanca.melimasterdetailexample.BasePresenter;
 import com.eantillanca.melimasterdetailexample.BaseView;
 import com.eantillanca.melimasterdetailexample.data.Item;
@@ -16,14 +18,17 @@ public interface ItemListContract {
 
         void showNoItems();
 
+        void showLoadingIndicator(Boolean loading);
+
+        void showItemDetail(Bundle b);
+
 
     }
 
     interface Presenter extends BasePresenter {
 
         void searchItems(String query);
-
-
+        void prepareItemDetail(Item item);
 
     }
 }
