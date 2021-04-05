@@ -5,13 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.eantillanca.melimasterdetailexample.data.Item;
-import com.eantillanca.melimasterdetailexample.data.ItemDataSource;
-import com.eantillanca.melimasterdetailexample.data.ItemRemoteDataSource;
-import com.eantillanca.melimasterdetailexample.itemList.ItemListContract;
-
-import java.util.List;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
+
+import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_ITEM;
 
 /**
  * Created by Esteban Antillanca on 4/3/21.
@@ -19,15 +16,14 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 class ItemDetailPresenter implements ItemDetailContract.Presenter{
 
     private ItemDetailContract.View mItemDetailView;
+    private Item currentItem;
 
     public ItemDetailPresenter(@NonNull ItemDetailContract.View view, Bundle b) {
         this.mItemDetailView = checkNotNull(view);
 
         mItemDetailView.setPresenter(this);
 
-        Item item = new Item(b.getString("title"), b.getString("id"),b.getString("price"),b.getString("thumbnail"),b.getString("sellerName"),b.getString("qtySells"),b.getString("condition"));
-
-        mItemDetailView.showItem(item);
+        currentItem = b.getParcelable(CURRENT_ITEM);
 
     }
 
@@ -39,7 +35,6 @@ class ItemDetailPresenter implements ItemDetailContract.Presenter{
 
     @Override
     public void start() {
-
-
+        mItemDetailView.showItem(currentItem);
     }
 }

@@ -62,27 +62,15 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     @Override
     public void searchItems(String query) {
-    //TODO implementation
         mItemsView.showLoadingIndicator(true);
         dataSource.getItems(callback, query);
 
     }
 
     @Override
-    public void prepareItemDetail(Item item) {
-
-        Bundle b = new Bundle();
-        b.putString("title", item.getTitle());
-        b.putString("id", item.getTitle());
-        b.putString("price", item.getPrice());
-        b.putString("thumbnail", item.getThumbnail());
-        b.putString("sellerName", item.getSellerName());
-        b.putString("qtySells", item.getQtySells());
-        b.putString("condition", item.getCondition());
-
-        mItemsView.showItemDetail(b);
-
-
+    public void openItemDetail(Item item) {
+        checkNotNull(item);
+        mItemsView.showItemDetail(item);
     }
 
     @Override

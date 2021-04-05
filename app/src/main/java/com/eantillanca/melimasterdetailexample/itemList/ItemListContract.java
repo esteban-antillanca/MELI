@@ -20,7 +20,7 @@ public interface ItemListContract {
 
         void showLoadingIndicator(Boolean loading);
 
-        void showItemDetail(Bundle b);
+        void showItemDetail(Item item);
 
 
     }
@@ -28,7 +28,8 @@ public interface ItemListContract {
     interface Presenter extends BasePresenter {
 
         void searchItems(String query);
-        void prepareItemDetail(Item item);
+
+        void openItemDetail(Item item);
 
     }
 }

@@ -27,12 +27,12 @@ import com.eantillanca.melimasterdetailexample.data.Item;
 import com.eantillanca.melimasterdetailexample.itemDetail.ItemDetailActivity;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_ITEM;
 
 /**
  * Created by Esteban Antillanca on 2021-03-29.
@@ -57,6 +57,17 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         //Empty constructor
     }
 
+    /**
+     * Listener for clicks on tasks in the ListView.
+     */
+    ItemsListener mItemListener = new ItemsListener() {
+
+        @Override
+        public void onItemClick(Item item) {
+            mPresenter.openItemDetail(item);
+        }
+    };
+
     public static ItemListFragment newInstance() {
         return new ItemListFragment();
     }
@@ -64,7 +75,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new ItemAdapter(new ArrayList<>(0), getContext(), mPresenter);
+        mListAdapter = new ItemAdapter(new ArrayList<>(0), getContext(), mItemListener);
 
     }
 
@@ -149,9 +160,9 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void showItemDetail(Bundle b) {
+    public void showItemDetail(Item item) {
         Intent intent = new Intent(getContext(), ItemDetailActivity.class);
-        intent.putExtras(b);
+        intent.putExtra(CURRENT_ITEM, item);
         startActivity(intent);
 
     }
@@ -161,12 +172,12 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         private List<Item> mItems;
         private Context context;
-        private ItemListContract.Presenter mPresenter;
+        private ItemsListener mListener;
 
-        public ItemAdapter(List<Item> items , Context context, ItemListContract.Presenter mPresenter) {
+        public ItemAdapter(List<Item> items , Context context, ItemsListener mListener) {
             setList(items);
             this.context = context;
-            this.mPresenter = mPresenter;
+            this.mListener = mListener;
         }
 
         private void replaceData(List<Item> items) {
@@ -191,7 +202,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             Item item = mItems.get(position);
             holder.itemTitle.setText(item.getTitle());
             holder.itemPrice.setText(item.getPrice());
-            holder.relativeLayout.setOnClickListener(v -> mPresenter.prepareItemDetail(item));
+            holder.relativeLayout.setOnClickListener(v -> mListener.onItemClick(item));
+            holder.relativeLayout.setTag(holder);
             Glide
                     .with(context)
                     .load(item.getThumbnail().trim())
@@ -212,15 +224,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
-    public interface CounterItemListener {
+    //To better handle click listeners in the Recycler View
+    public interface ItemsListener {
 
-        //TODO Implementation
-        /*
-        void onIncCLick(Item incItem, int position);
-        void onDecClick(Item decItem, int position);
-        void onDelClick(Item delItem, int position);
-
-         */
+        void onItemClick(Item item);
 
     }
 

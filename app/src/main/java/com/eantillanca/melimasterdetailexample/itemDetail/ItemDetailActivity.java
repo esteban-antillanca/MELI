@@ -36,9 +36,9 @@ public class ItemDetailActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), itemDetailFragment, R.id.contentFrame);
         }
 
-        //create the presenter
         Bundle extras = getIntent().getExtras();
 
+        //create the presenter
         mItemDetailPresenter = new ItemDetailPresenter(itemDetailFragment, extras);
         itemDetailFragment.setPresenter(mItemDetailPresenter);
 

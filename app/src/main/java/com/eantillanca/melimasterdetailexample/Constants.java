@@ -6,4 +6,6 @@ package com.eantillanca.melimasterdetailexample;
 public class Constants {
 
     public final static String BASE_URL ="https://api.mercadolibre.com";
+    public final static String CURRENT_ITEM = "current_item";
+
 }

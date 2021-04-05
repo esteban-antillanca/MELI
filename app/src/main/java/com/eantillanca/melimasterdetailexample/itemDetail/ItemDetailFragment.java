@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.eantillanca.melimasterdetailexample.R;
 import com.eantillanca.melimasterdetailexample.data.Item;
 import com.eantillanca.melimasterdetailexample.itemList.ItemListFragment;
@@ -21,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by Esteban Antillanca on 4/3/21.
  */
-class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
+public class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
 
     private ItemDetailContract.Presenter mPresenter;
     private TextView condition;
@@ -29,7 +31,10 @@ class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
     private TextView price;
     private TextView seller;
     private TextView qtySell;
+    private ImageView image;
     private Button btn;
+
+
 
     public static ItemDetailFragment newInstance() {
         return new ItemDetailFragment();
@@ -50,6 +55,7 @@ class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
         seller = root.findViewById(R.id.seller_name);
         qtySell = root.findViewById(R.id.qty_sells);
         btn = root.findViewById(R.id.button);
+        image = root.findViewById(R.id.imageView);
         btn.setOnClickListener(v -> showPaymentAction());
 
         return root;
@@ -83,6 +89,11 @@ class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
         price.setText(item.getPrice());
         seller.setText(item.getSellerName());
         qtySell.setText(item.getQtySells());
+        Glide
+                .with(this)
+                .load(item.getThumbnail())
+                .placeholder(R.drawable.fogg_640)
+                .into(image);
 
     }
 
