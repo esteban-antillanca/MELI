@@ -58,7 +58,7 @@ public class ItemRemoteDataSource implements ItemDataSource {
                         JsonObject objectInArray = items_array.get(i).getAsJsonObject();
                         String title = objectInArray.get("title").toString();
                         String id = objectInArray.get("id").toString();
-                        String price = objectInArray.get("price").toString();
+                        String price = "$" + objectInArray.get("price").toString();
                         String thumbnail = objectInArray.get("thumbnail").toString();
                         //Digging to find data from the seller
                         JsonObject eshopNode = objectInArray.getAsJsonObject("seller").getAsJsonObject("eshop");

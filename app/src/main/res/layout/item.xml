@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlayitem"
+    android:id="@+id/cardViewitem"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:clickable="true"
     android:minHeight="72dp"
-    android:paddingEnd="?listPreferredItemPaddingRight"
-    android:paddingLeft="?listPreferredItemPaddingLeft"
-    android:paddingRight="?listPreferredItemPaddingRight"
-    android:paddingStart="?listPreferredItemPaddingLeft"
-    >
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="16dp"
+    android:layout_margin="6dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp">
             <ImageView
                 android:id="@+id/item_thumbnail"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="centerInside"
                 android:layout_centerVertical="true"
@@ -28,7 +32,7 @@
                 android:layout_alignWithParentIfMissing="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:layout_toEndOf="@+id/item_thumbnail"
                 android:layout_toRightOf="@+id/item_thumbnail"
                 android:orientation="vertical"
@@ -41,18 +45,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="First Line"
-                    android:layout_gravity="center"
-                    android:textColor="@color/grey_600"/>
+                    android:textColor="@color/grey_600"
+                    android:textSize="14sp"
+                    android:gravity="left"/>
 
                 <TextView
                     android:id="@+id/item_price"
                     style="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="left"
                     android:singleLine="true"
-                    tools:text="Second Line"
-                    android:layout_gravity="center"/>
+                    android:textSize="22sp"
+                    tools:text="Second Line" />
             </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

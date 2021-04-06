@@ -62,8 +62,14 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     @Override
     public void searchItems(String query) {
-        mItemsView.showLoadingIndicator(true);
-        dataSource.getItems(callback, query);
+        if(!query.equals("")) {
+            mItemsView.setFirstImageVisible(false);
+            mItemsView.showLoadingIndicator(true);
+            dataSource.getItems(callback, query);
+        }else{
+            mItemsView.showNoEmptySearchString();
+        }
+
 
     }
 

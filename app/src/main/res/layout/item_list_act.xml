@@ -20,18 +20,8 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_hint"
-            android:id="@+id/search_edit_text"
-            android:inputType="text"/>
-
-
-
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <FrameLayout
         android:id="@+id/contentFrame"
         android:layout_width="match_parent"

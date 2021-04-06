@@ -22,6 +22,10 @@ public interface ItemListContract {
 
         void showItemDetail(Item item);
 
+        void showNoEmptySearchString();
+
+        void setFirstImageVisible(Boolean visible);
+
 
     }
 

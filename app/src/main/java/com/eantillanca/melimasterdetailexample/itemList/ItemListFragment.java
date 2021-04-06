@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,6 +53,8 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     private EditText searchEditText;
 
     private ProgressBar spinner;
+
+    private RelativeLayout firstLoad;
 
     public ItemListFragment(){
         //Empty constructor
@@ -105,12 +108,11 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         listView.setLayoutManager(llManager);
         listView.setAdapter(mListAdapter);
 
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(listView.getContext(),llManager.getOrientation());
-        listView.addItemDecoration(mDividerItemDecoration);
-
         spinner = root.findViewById(R.id.loading_spinner);
 
-        searchEditText = this.getActivity().findViewById(R.id.search_edit_text);
+        firstLoad = root.findViewById(R.id.rlay_start);
+
+        searchEditText = root.findViewById(R.id.search_edit_text);
         searchEditText.setOnKeyListener((v, keyCode, event) -> {
             // If the event is a key-down event on the "enter" button
             if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
@@ -167,6 +169,21 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
+    @Override
+    public void showNoEmptySearchString() {
+
+        Snackbar.make(getActivity().findViewById(R.id.contentFrame), getActivity().getString(R.string.no_empty_search), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    @Override
+    public void setFirstImageVisible(Boolean visible) {
+
+        if(visible) firstLoad.setVisibility(View.VISIBLE);
+        else firstLoad.setVisibility(View.GONE);
+
+    }
+
 
     private static class ItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -202,12 +219,13 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             Item item = mItems.get(position);
             holder.itemTitle.setText(item.getTitle());
             holder.itemPrice.setText(item.getPrice());
-            holder.relativeLayout.setOnClickListener(v -> mListener.onItemClick(item));
-            holder.relativeLayout.setTag(holder);
+            holder.cardView.setOnClickListener(v -> mListener.onItemClick(item));
+            holder.cardView.setTag(holder);
             Glide
                     .with(context)
                     .load(item.getThumbnail().trim())
                     .placeholder(R.drawable.fogg_640)
+                    .centerCrop()
                     .into(holder.thumbnail);
 
         }
@@ -238,7 +256,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         private ImageView thumbnail;
 
-        private RelativeLayout relativeLayout;
+        private CardView cardView;
 
 
         public ViewHolder(@NonNull View view) {
@@ -246,7 +264,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
             this.itemTitle = view.findViewById(R.id.item_title);
             this.itemPrice = view.findViewById(R.id.item_price);
             this.thumbnail = view.findViewById(R.id.item_thumbnail);
-            this.relativeLayout = view.findViewById(R.id.rlayitem);
+            this.cardView = view.findViewById(R.id.cardViewitem);
         }
 
     }

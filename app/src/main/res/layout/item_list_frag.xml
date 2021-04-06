@@ -13,12 +13,26 @@
             android:visibility="visible"
             android:layout_alignParentTop="true"
             >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16sp"
+                android:backgroundTint="@color/white"
+                android:hint="@string/search_hint"
+                android:id="@+id/search_edit_text"
+                android:inputType="text"
+                android:drawableRight="@drawable/ic_search"
+                android:drawablePadding="16sp"
+                android:background="@drawable/et_style"
+                android:layout_alignParentTop="true"
+                android:textCursorDrawable="@null"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/search_edit_text"
+
                 />
         </RelativeLayout>
     <ProgressBar
@@ -42,6 +56,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:id="@+id/no_counters_img"/>
+           />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlay_start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/pixeltrue_vision"
+            android:id="@+id/img_first_search"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_search"
+            android:layout_below="@+id/img_first_search"
+            android:layout_centerHorizontal="true"/>
+</RelativeLayout>
 </RelativeLayout>

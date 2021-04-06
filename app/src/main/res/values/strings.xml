@@ -3,4 +3,6 @@
     <string name="network_error">No se detectó acceso a la red. Revisa el estado de conexión de tu dispositivo.</string>
     <string name="search_hint">Busca un producto, ¡lo que quieras!</string>
     <string name="coming_soon_message">Próximamente...</string>
+    <string name="no_empty_search">Ingresa algo antes de buscar</string>
+    <string name="enter_search">Intenta ingresar una búsqueda</string>
 </resources>
