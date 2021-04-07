@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.eantillanca.melimasterdetailexample.data.Item;
 import com.eantillanca.melimasterdetailexample.data.ItemDataSource;
 import com.eantillanca.melimasterdetailexample.data.ItemRemoteDataSource;
+import com.eantillanca.melimasterdetailexample.util.EspressoIdlingResource;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class ItemListPresenter implements ItemListContract.Presenter {
                 }
 
                 mItemsView.showLoadingIndicator(false);
+                EspressoIdlingResource.decrement();
 
             }
 
@@ -63,6 +65,8 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     @Override
     public void searchItems(String query) {
         if(!query.equals("")) {
+
+            EspressoIdlingResource.increment();
             mItemsView.setFirstImageVisible(false);
             mItemsView.showLoadingIndicator(true);
             dataSource.getItems(callback, query);

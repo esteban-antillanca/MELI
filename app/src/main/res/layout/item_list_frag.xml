@@ -5,35 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh_layout"
     tools:context=".itemList.ItemListActivity">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16sp"
+        android:backgroundTint="@color/white"
+        android:hint="@string/search_hint"
+        android:id="@+id/search_edit_text"
+        android:inputType="text"
+        android:drawableRight="@drawable/ic_search"
+        android:drawablePadding="16sp"
+        android:background="@drawable/et_style"
+        android:layout_alignParentTop="true"
+        android:textCursorDrawable="@null"/>
 
         <RelativeLayout
             android:id="@+id/itemsL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            android:layout_alignParentTop="true"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16sp"
-                android:backgroundTint="@color/white"
-                android:hint="@string/search_hint"
-                android:id="@+id/search_edit_text"
-                android:inputType="text"
-                android:drawableRight="@drawable/ic_search"
-                android:drawablePadding="16sp"
-                android:background="@drawable/et_style"
-                android:layout_alignParentTop="true"
-                android:textCursorDrawable="@null"/>
-
+            android:layout_below="@+id/search_edit_text">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/search_edit_text"
-
-                />
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     <ProgressBar
         android:layout_width="wrap_content"
@@ -49,14 +44,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
+        android:layout_below="@+id/search_edit_text"
         >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="@drawable/cherry_list_is_empty_1"
+            android:id="@+id/img_no_results"
            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_results"
+            android:layout_below="@+id/img_no_results"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlay_start"
@@ -64,7 +68,8 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         tools:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/search_edit_text">
 
         <ImageView
             android:layout_width="400dp"

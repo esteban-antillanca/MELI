@@ -5,4 +5,5 @@
     <string name="coming_soon_message">Próximamente...</string>
     <string name="no_empty_search">Ingresa algo antes de buscar</string>
     <string name="enter_search">Intenta ingresar una búsqueda</string>
+    <string name="no_results">No hubo resultados. Intenta buscar otro producto</string>
 </resources>

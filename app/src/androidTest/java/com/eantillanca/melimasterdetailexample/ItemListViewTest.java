@@ -20,13 +20,15 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
-import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Created by Esteban Antillanca on 2020-01-14.
+ * Created by Esteban Antillanca on 2021-04-06.
  */
 @RunWith(AndroidJUnit4ClassRunner.class)
 @LargeTest
@@ -46,25 +48,35 @@ public class ItemListViewTest {
     }
 
     @Test
-    public void emptyCounter_isNotSaved() {
+    public void emptySearch_showError() {
         // Launch activity to add a new task
-        launchCounterListActivity();
+        launchSearchItemActivity();
 
-        // Add empty counter name
-        //onView(withId(R.id.add_counter_input)).perform(clearText());
-
-        //Try to save
-        //onView(withId(R.id.add_counter_btn)).perform(click());
+        // Do empty search
+        onView(withId(R.id.search_edit_text)).perform(clearText(), pressImeActionButton());
 
         //Verify expected message to be shown
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText(R.string.add_counter_no_title_err)));
+                .check(matches(withText(R.string.no_empty_search)));
     }
 
-    private void launchCounterListActivity() {
+    private void launchSearchItemActivity() {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
                 ItemListActivity.class);
 
         mActivityTestRule.launchActivity(intent);
     }
+    @Test
+    public void noResults_showError() {
+        // Launch activity to add a new task
+        launchSearchItemActivity();
+
+        // Do empty search
+        onView(withId(R.id.search_edit_text)).perform(replaceText("mnbbccxksjsjgiwieir"), pressImeActionButton());
+
+        //Verify expected message to be shown
+        onView(withId(R.id.img_no_results))
+                .check(matches(isDisplayed()));
+    }
+
 }

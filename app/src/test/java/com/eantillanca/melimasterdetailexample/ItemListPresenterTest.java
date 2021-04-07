@@ -24,7 +24,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
- * Created by Esteban Antillanca on 2020-01-13.
+ * Created by Esteban Antillanca on 2021-04-06.
  */
 public class ItemListPresenterTest {
 
@@ -39,86 +39,49 @@ public class ItemListPresenterTest {
     @Captor
     private ArgumentCaptor<ItemDataSource.LoadItemsCallback> argumentCaptor;
 
-    @Captor
-    private ArgumentCaptor<Item> counterCaptor;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-
         presenter = new ItemListPresenter(dataSource,view);
-
-
     }
 
     @Test
     public void fetchValidDataShouldLoadIntoView(){
-        presenter.searchItems();
-        verify(dataSource,times(1)).getItems(argumentCaptor.capture());
+        presenter.searchItems("avengers");
+        verify(dataSource,times(1)).getItems(argumentCaptor.capture(), eq("avengers"));
         argumentCaptor.getValue().onItemsLoaded(getList());
-
         ArgumentCaptor<List> entityArgumentCaptor = ArgumentCaptor.forClass(List.class);
-
         verify(view).showItems(entityArgumentCaptor.capture());
-
-        assertTrue(entityArgumentCaptor.getValue().size()==5);
+        assertTrue(entityArgumentCaptor.getValue().size()==6);
 
 
     }
 
     @Test
     public void emptyListShouldShowError(){
-        presenter.searchItems();;
-        verify(dataSource,times(1)).getItems(argumentCaptor.capture());
+        presenter.searchItems("test");;
+        verify(dataSource,times(1)).getItems(argumentCaptor.capture(), eq("test"));
         argumentCaptor.getValue().onItemsLoaded(new ArrayList<>());
         verify(view).showNoItems();
     }
 
     @Test
     public void noConnectionShouldShowError(){
-        presenter.searchItems();
-        verify(dataSource,times(1)).getItems(argumentCaptor.capture());
+        presenter.searchItems("test");
+        verify(dataSource,times(1)).getItems(argumentCaptor.capture(),eq("test"));
         argumentCaptor.getValue().onDataNotAvailable();
         verify(view).showLoadingItemsError();
     }
-/*
-    @Test
-    public void duplicatedCounterShouldShowError(){
-        presenter.createCounter("Kids",getList());
-        verify(view).showDuplicatedNameErr();
-    }
-
-    @Test
-    public void modifiedDataShouldUpdateView(){
-
-        //Decrease
-        presenter.decCounter(counterCaptor.capture(), eq(1));
-        verify(dataSource,times(1)).decCounter(counterCaptor.capture(),argumentCaptor.capture());
-        argumentCaptor.getValue().onCounterDecreased(getList());
-        verify(view).showCounterDec(counterCaptor.capture(),anyInt());
-
-        //Increase
-        presenter.incCounter(counterCaptor.capture(), eq(1));
-        verify(dataSource,times(1)).incCounter(counterCaptor.capture(),argumentCaptor.capture());
-        argumentCaptor.getValue().onCounterIncreased(getList());
-        verify(view).showCounterInc(counterCaptor.capture(),anyInt());
-
-        //Deleted
-        presenter.deleteCounter(any(Item.class), eq(1));
-        verify(dataSource,times(1)).delCounter(counterCaptor.capture(),argumentCaptor.capture());
-        argumentCaptor.getValue().onCounterDeleted(getList());
-        verify(view).showCounterRemoved(anyInt());
-    }
- */
     public List<Item> getList(){
 
         ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("Glasses of water","1"));
-        items.add(new Item("White Shirts","2"));
-        items.add(new Item("Ex-Girlfriends","3"));
-        items.add(new Item("Kids","4"));
-        items.add(new Item("Nintendo Switch games","5"));
-
+        items.add(new Item("Thor Odinson","1","300","http://www.test.com/image1.jpg","Donald Blake", "100", "new"));
+        items.add(new Item("Captain America", "2", "2500","http://www.test.com/image2.jpg","Steve Rogers","4","used"));
+        items.add(new Item("Iron Man", "3", "150","http://www.test.com/image3.jpg","Tony Stark","4","new"));
+        items.add(new Item("Black Widow", "4", "1010","http://www.test.com/image4.jpg","Natasha Romanoff","4","used"));
+        items.add(new Item("Hulk", "5", "10000","http://www.test.com/image5.jpg","Bruce Banner","4","new"));
+        items.add(new Item("Hawkeye", "6", "645","http://www.test.com/image6.jpg","Clint Barton","4","new"));
         return items;
 
     }

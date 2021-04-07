@@ -11,11 +11,11 @@
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="4dp"
     card_view:cardCornerRadius="16dp"
-    android:layout_margin="6dp">
+    android:layout_margin="3dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
+        android:padding="3dp">
             <ImageView
                 android:id="@+id/item_thumbnail"
                 android:layout_width="100dp"
