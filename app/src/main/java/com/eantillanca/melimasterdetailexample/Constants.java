@@ -7,5 +7,6 @@ public class Constants {
 
     public final static String BASE_URL ="https://api.mercadolibre.com";
     public final static String CURRENT_ITEM = "current_item";
+    public final static String CURRENT_SELLER= "current_seller";
 
 }

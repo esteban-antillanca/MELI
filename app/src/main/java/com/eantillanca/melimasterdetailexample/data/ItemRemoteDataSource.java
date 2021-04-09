@@ -4,14 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,13 +57,9 @@ public class ItemRemoteDataSource implements ItemDataSource {
                         String id = objectInArray.get("id").toString();
                         String price = "$" + objectInArray.get("price").toString();
                         String thumbnail = objectInArray.get("thumbnail").toString();
-                        //Digging to find data from the seller
-                        JsonObject eshopNode = objectInArray.getAsJsonObject("seller").getAsJsonObject("eshop");
-                        String sellerName = eshopNode != null ? eshopNode.get("nick_name").toString() : "";
-                        String qtySell = objectInArray.getAsJsonObject("seller").getAsJsonObject("seller_reputation").getAsJsonObject("transactions").get("completed").toString();;
-                        String condition = objectInArray.get("condition").toString().equals("\"new\"")? "Nuevo" : "Usado";
+                        String sellerID = objectInArray.get("seller").getAsJsonObject().get("id").toString();
 
-                        Item new_item = new Item(title.replace("\"",""),id,price,thumbnail.replace("\"",""), sellerName.replace("\"",""), qtySell, condition);
+                        Item new_item = new Item(title.replace("\"",""),id.replace("\"",""),price,thumbnail.replace("\"",""), sellerID);
                         items.add(new_item);
                     }
 
@@ -84,10 +77,81 @@ public class ItemRemoteDataSource implements ItemDataSource {
 
     }
 
+    @Override
+    public void getItemDetail(LoadItemDetailCallback callback, String id) {
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+
+        Call<JsonArray> call = service.getItemDetail(id);
+        call.enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response){
+
+                JsonObject object = response.body().get(0).getAsJsonObject().get("body").getAsJsonObject();
+                String title = object.get("title").toString();
+                String price = "$" + object.get("price").toString();
+                String condition = object.get("condition").toString().equals("\"new\"")? "Nuevo" : "Usado";
+
+                JsonArray arrayPictures = object.get("pictures").getAsJsonArray();
+                ArrayList<String> pictures = new ArrayList<String>();
+                for ( int i = 0; i < arrayPictures.size(); i++)
+                {
+                    pictures.add(arrayPictures.get(i).getAsJsonObject().get("secure_url").toString().replace("\"",""));
+
+                }
+
+                callback.onItemDetailLoaded(new ItemDetail(title.replace("\"",""),condition,price, pictures.toArray(new String[0])));
+                System.out.println("");
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+                callback.onDataNotAvailable();
+
+            }
+
+        });
+
+    }
+
+    @Override
+    public void getSeller(LoadSellerCallback callback, String id) {
+
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+
+        Call<JsonArray> call = service.getSeller(id);
+        call.enqueue(new Callback<JsonArray>(){
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response){
+
+                JsonObject object = response.body().get(0).getAsJsonObject().get("body").getAsJsonObject();
+                String nickname = object.get("nickname").toString();
+                String total = object.get("seller_reputation").getAsJsonObject().get("transactions").getAsJsonObject().get("total").toString();
+
+                callback.onSellerLoaded(new Seller(nickname.replace("\"",""),total));
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+                callback.onDataNotAvailable();
+
+            }
+
+        });
+
+    }
+
     public interface GetDataService {
 
         @GET("/sites/MLA/search?")
         Call<JsonObject> getItems(@Query("q") String query);
+
+        @GET("/items?")
+        Call<JsonArray> getItemDetail(@Query("ids") String ids);
+
+        @GET("/users?")
+        Call<JsonArray> getSeller(@Query("ids") String ids);
 
 
     }

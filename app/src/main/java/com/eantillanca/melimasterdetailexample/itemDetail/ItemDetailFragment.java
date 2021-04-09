@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.eantillanca.melimasterdetailexample.R;
 import com.eantillanca.melimasterdetailexample.data.Item;
+import com.eantillanca.melimasterdetailexample.data.ItemDetail;
+import com.eantillanca.melimasterdetailexample.data.Seller;
 import com.eantillanca.melimasterdetailexample.itemList.ItemListFragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +36,7 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
     private TextView qtySell;
     private ImageView image;
     private Button btn;
+    private ProgressBar spinner;
 
 
 
@@ -56,6 +60,8 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
         qtySell = root.findViewById(R.id.qty_sells);
         btn = root.findViewById(R.id.button);
         image = root.findViewById(R.id.imageView);
+        spinner = root.findViewById(R.id.loading_spinner);
+
         btn.setOnClickListener(v -> showPaymentAction());
 
         return root;
@@ -82,18 +88,37 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
     }
 
     @Override
-    public void showItem(Item item) {
+    public void showItem(ItemDetail item, Seller mseller) {
+
 
         condition.setText(item.getCondition());
         title.setText(item.getTitle());
         price.setText(item.getPrice());
-        seller.setText(item.getSellerName());
-        qtySell.setText(item.getQtySells());
+        seller.setText(mseller.getNickname());
+        qtySell.setText(mseller.getTotalTransactions());
         Glide
                 .with(this)
-                .load(item.getThumbnail())
+                .load(item.getPictures()[0])
                 .placeholder(R.drawable.fogg_640)
                 .into(image);
+
+    }
+
+    @Override
+    public void showLoadingIndicator(Boolean loading) {
+
+        if (loading) {
+            spinner.setVisibility(View.VISIBLE);
+        } else {
+            spinner.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    @Override
+    public void showLoadingItemDetailError() {
+        Snackbar.make(getActivity().findViewById(R.id.contentFrame), getActivity().getString(R.string.network_error), Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
 
     }
 

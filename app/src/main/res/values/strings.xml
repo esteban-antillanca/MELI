@@ -6,4 +6,7 @@
     <string name="no_empty_search">Ingresa algo antes de buscar</string>
     <string name="enter_search">Intenta ingresar una búsqueda</string>
     <string name="no_results">No hubo resultados. Intenta buscar otro producto</string>
+    <string name="sold_by">Vendido por</string>
+    <string name="buy_now">Comprar ahora</string>
+    <string name="sold">ventas</string>
 </resources>

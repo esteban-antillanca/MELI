@@ -20,7 +20,7 @@ public interface ItemListContract {
 
         void showLoadingIndicator(Boolean loading);
 
-        void showItemDetail(Item item);
+        void showItemDetail(String itemID, String sellerID);
 
         void showNoEmptySearchString();
 
@@ -33,7 +33,7 @@ public interface ItemListContract {
 
         void searchItems(String query);
 
-        void openItemDetail(Item item);
+        void openItemDetail(String itemID, String sellerID);
 
     }
 }

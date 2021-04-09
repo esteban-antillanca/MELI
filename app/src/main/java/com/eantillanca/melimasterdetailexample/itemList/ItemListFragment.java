@@ -32,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_SELLER;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_ITEM;
 
@@ -67,7 +68,7 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
         @Override
         public void onItemClick(Item item) {
-            mPresenter.openItemDetail(item);
+            mPresenter.openItemDetail(item.getID(), item.getSellerID());
         }
     };
 
@@ -162,9 +163,11 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
     }
 
     @Override
-    public void showItemDetail(Item item) {
+    public void showItemDetail(String itemID, String sellerID) {
+
         Intent intent = new Intent(getContext(), ItemDetailActivity.class);
-        intent.putExtra(CURRENT_ITEM, item);
+        intent.putExtra(CURRENT_ITEM, itemID);
+        intent.putExtra(CURRENT_SELLER, sellerID);
         startActivity(intent);
 
     }

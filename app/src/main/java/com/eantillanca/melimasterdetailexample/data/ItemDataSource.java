@@ -14,7 +14,19 @@ public interface ItemDataSource {
         void onDataNotAvailable();
     }
 
+    interface LoadItemDetailCallback {
+        void onItemDetailLoaded(ItemDetail itemDetail);
+        void onDataNotAvailable();
+    }
+
+    interface LoadSellerCallback{
+        void onSellerLoaded(Seller seller);
+        void onDataNotAvailable();
+    }
+
     void getItems(LoadItemsCallback callback, String query);
+    void getItemDetail(LoadItemDetailCallback callback, String id);
+    void getSeller(LoadSellerCallback callback, String id);
 
 
 

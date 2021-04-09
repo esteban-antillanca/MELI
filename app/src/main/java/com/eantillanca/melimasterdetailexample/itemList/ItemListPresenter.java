@@ -24,9 +24,6 @@ public class ItemListPresenter implements ItemListContract.Presenter {
 
     private final ItemListContract.View mItemsView;
 
-
-
-    //all api methods return the complete updated list, so we're using a common callback
     private ItemDataSource.LoadItemsCallback callback;
 
     public ItemListPresenter(@NonNull ItemRemoteDataSource dataSource, @NonNull ItemListContract.View view) {
@@ -78,9 +75,10 @@ public class ItemListPresenter implements ItemListContract.Presenter {
     }
 
     @Override
-    public void openItemDetail(Item item) {
-        checkNotNull(item);
-        mItemsView.showItemDetail(item);
+    public void openItemDetail(String itemID, String sellerID) {
+        checkNotNull(itemID);
+        checkNotNull(sellerID);
+        mItemsView.showItemDetail(itemID, sellerID);
     }
 
     @Override
