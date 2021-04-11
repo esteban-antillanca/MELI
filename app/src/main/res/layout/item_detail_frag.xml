@@ -39,8 +39,7 @@
                 android:id="@+id/condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_margin="16dp"
                 android:textColor="@color/grey_900"
                 tools:text="Nuevo"
                 android:textSize="14sp"
@@ -51,25 +50,33 @@
                 android:id="@+id/product_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/condition"
                 tools:text="Título Maravilloso" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/slideView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_title"
-                app:srcCompat="@drawable/fogg_640" />
-
+                app:srcCompat="@drawable/fogg_640"
+                app:sliderIndicatorEnabled="true"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="16dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="#5A5A5A"
+                app:sliderIndicatorUnselectedColor="#FFF"
+                app:sliderScrollTimeInSec="1" />
             <TextView
                 android:id="@+id/item_price"
                 android:layout_width="wrap_content"
@@ -80,7 +87,7 @@
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="$30.000.000"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/slideView" />
 
             <Button
                 android:id="@+id/button"

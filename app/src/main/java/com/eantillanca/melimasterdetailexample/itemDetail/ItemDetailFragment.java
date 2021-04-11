@@ -1,5 +1,6 @@
 package com.eantillanca.melimasterdetailexample.itemDetail;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,12 @@ import com.eantillanca.melimasterdetailexample.data.ItemDetail;
 import com.eantillanca.melimasterdetailexample.data.Seller;
 import com.eantillanca.melimasterdetailexample.itemList.ItemListFragment;
 import com.google.android.material.snackbar.Snackbar;
+import com.smarteist.autoimageslider.SliderView;
+import com.smarteist.autoimageslider.SliderViewAdapter;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,9 +41,9 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
     private TextView price;
     private TextView seller;
     private TextView qtySell;
-    private ImageView image;
     private Button btn;
     private ProgressBar spinner;
+    private SliderView slideView;
 
 
 
@@ -59,8 +66,8 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
         seller = root.findViewById(R.id.seller_name);
         qtySell = root.findViewById(R.id.qty_sells);
         btn = root.findViewById(R.id.button);
-        image = root.findViewById(R.id.imageView);
         spinner = root.findViewById(R.id.loading_spinner);
+        slideView = root.findViewById(R.id.slideView);
 
         btn.setOnClickListener(v -> showPaymentAction());
 
@@ -96,11 +103,10 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
         price.setText(item.getPrice());
         seller.setText(mseller.getNickname());
         qtySell.setText(mseller.getTotalTransactions());
-        Glide
-                .with(this)
-                .load(item.getPictures()[0])
-                .placeholder(R.drawable.fogg_640)
-                .into(image);
+
+        SliderAdapter adapter = new SliderAdapter(getContext(), item.getPictures());
+        slideView.setSliderAdapter(adapter);
+        slideView.setAutoCycle(false);
 
     }
 
@@ -120,6 +126,66 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
         Snackbar.make(getActivity().findViewById(R.id.contentFrame), getActivity().getString(R.string.network_error), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
 
+    }
+
+    public static class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterViewHolder> {
+
+        // list for storing urls of images.
+        private final List<String> mSliderItems;
+
+        // Constructor
+        public SliderAdapter(Context context, String[] pictures) {
+
+            this.mSliderItems = new ArrayList<String>();
+
+            for (int i = 0; i < pictures.length; i++)
+            {
+                mSliderItems.add(pictures[i]);
+            }
+        }
+
+        // We are inflating the slider_layout
+        // inside on Create View Holder method.
+        @Override
+        public SliderAdapterViewHolder onCreateViewHolder(ViewGroup parent) {
+            View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_layout, null);
+            return new SliderAdapterViewHolder(inflate);
+        }
+
+        // Inside on bind view holder we will
+        // set data to item of Slider View.
+        @Override
+        public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
+
+            final String sliderItem = mSliderItems.get(position);
+
+            // Glide is use to load image
+            // from url in your imageview.
+            Glide.with(viewHolder.itemView)
+                    .load(sliderItem)
+                    .fitCenter()
+                    .into(viewHolder.imageViewBackground);
+        }
+
+        // this method will return
+        // the count of our list.
+        @Override
+        public int getCount() {
+            return mSliderItems.size();
+        }
+
+        static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {
+            // Adapter class for initializing
+            // the views of our slider view.
+            View itemView;
+            ImageView imageViewBackground;
+
+            public SliderAdapterViewHolder(View itemView) {
+                super(itemView);
+                imageViewBackground = itemView.findViewById(R.id.myimage);
+                this.itemView = itemView;
+            }
+        }
     }
 
 }
