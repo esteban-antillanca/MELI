@@ -38,7 +38,6 @@ public class ItemDetailActivity extends AppCompatActivity {
             itemDetailFragment = ItemDetailFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), itemDetailFragment, R.id.contentFrame);
         }
-
         String itemID = getIntent().getStringExtra(CURRENT_ITEM);
         String sellerID = getIntent().getStringExtra(CURRENT_SELLER);
 

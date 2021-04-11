@@ -20,7 +20,7 @@ import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_ITEM;
 /**
  * Created by Esteban Antillanca on 4/3/21.
  */
-class ItemDetailPresenter implements ItemDetailContract.Presenter{
+public class ItemDetailPresenter implements ItemDetailContract.Presenter{
 
     private ItemDetailContract.View mItemDetailView;
 
@@ -58,6 +58,9 @@ class ItemDetailPresenter implements ItemDetailContract.Presenter{
 
             @Override
             public void onSellerLoaded(Seller mseller) {
+
+                EspressoIdlingResource.decrement();
+
                 seller = mseller;
                 mItemDetailView.showItem(currentItemDetail, seller);
                 mItemDetailView.showLoadingIndicator(false);
@@ -94,14 +97,10 @@ class ItemDetailPresenter implements ItemDetailContract.Presenter{
 
     }
 
-
-    @Override
-    public void goBack() {
-
-    }
-
     @Override
     public void start() {
+
+        EspressoIdlingResource.increment();
 
         mItemDetailView.showLoadingIndicator(true);
 

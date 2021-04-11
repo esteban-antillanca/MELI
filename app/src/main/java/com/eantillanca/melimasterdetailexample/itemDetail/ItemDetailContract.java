@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Esteban Antillanca on 4/3/21.
  */
-interface ItemDetailContract {
+public interface ItemDetailContract {
 
     interface View extends BaseView<ItemDetailContract.Presenter> {
 
@@ -26,7 +26,6 @@ interface ItemDetailContract {
     }
 
     interface Presenter extends BasePresenter {
-        void goBack();
 
 
     }

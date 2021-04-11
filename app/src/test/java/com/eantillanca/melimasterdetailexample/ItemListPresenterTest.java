@@ -76,12 +76,12 @@ public class ItemListPresenterTest {
     public List<Item> getList(){
 
         ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item("Thor Odinson","1","300","http://www.test.com/image1.jpg","Donald Blake", "100", "new"));
-        items.add(new Item("Captain America", "2", "2500","http://www.test.com/image2.jpg","Steve Rogers","4","used"));
-        items.add(new Item("Iron Man", "3", "150","http://www.test.com/image3.jpg","Tony Stark","4","new"));
-        items.add(new Item("Black Widow", "4", "1010","http://www.test.com/image4.jpg","Natasha Romanoff","4","used"));
-        items.add(new Item("Hulk", "5", "10000","http://www.test.com/image5.jpg","Bruce Banner","4","new"));
-        items.add(new Item("Hawkeye", "6", "645","http://www.test.com/image6.jpg","Clint Barton","4","new"));
+        items.add(new Item("Thor Odinson","1","300","http://www.test.com/image1.jpg","12345"));
+        items.add(new Item("Captain America", "2", "2500","http://www.test.com/image2.jpg","67890"));
+        items.add(new Item("Iron Man", "3", "150","http://www.test.com/image3.jpg","09876"));
+        items.add(new Item("Black Widow", "4", "1010","http://www.test.com/image4.jpg","54321"));
+        items.add(new Item("Hulk", "5", "10000","http://www.test.com/image5.jpg","10293"));
+        items.add(new Item("Hawkeye", "6", "645","http://www.test.com/image6.jpg","564738"));
         return items;
 
     }
