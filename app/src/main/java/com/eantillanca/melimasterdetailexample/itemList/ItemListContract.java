@@ -1,12 +1,14 @@
 package com.eantillanca.melimasterdetailexample.itemList;
 
-import android.os.Bundle;
-
 import com.eantillanca.melimasterdetailexample.BasePresenter;
 import com.eantillanca.melimasterdetailexample.BaseView;
 import com.eantillanca.melimasterdetailexample.data.Item;
 
 import java.util.List;
+
+/**
+ * This is the contract between view and presenter of the Item List feature
+ */
 
 public interface ItemListContract {
 

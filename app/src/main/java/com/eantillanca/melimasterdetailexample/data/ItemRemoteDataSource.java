@@ -18,6 +18,9 @@ import retrofit2.http.Query;
 
 /**
  * Created by Esteban Antillanca on 2020-01-08.
+ * Implementation of the data source of the app, and a part of the Model in MVP. This implementation is for remote data only,
+ * and it has all the logic for consuming the given API's. Basic serialization and deserialization was used in order to simplify
+ * the development
  */
 public class ItemRemoteDataSource implements ItemDataSource {
 

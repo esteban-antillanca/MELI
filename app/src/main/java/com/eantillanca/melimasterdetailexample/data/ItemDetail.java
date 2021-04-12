@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Esteban Antillanca on 4/7/21.
+ * POJO for the detail of a given Item, to populate the Item Detail View. Some of the fields have are redundant with other in the
+ * Item list class, but they correspond to different endpoints so they are mapped in different classes for simplicity
  */
+
 public final class ItemDetail {
     @SerializedName("title")
     private final String title;

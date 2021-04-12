@@ -18,7 +18,6 @@ import java.util.List;
 
 
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -66,6 +65,9 @@ public class ItemListPresenterTest {
         verify(view).showNoItems();
     }
 
+    /**
+     *
+     */
     @Test
     public void noConnectionShouldShowError(){
         presenter.searchItems("test");
@@ -73,6 +75,11 @@ public class ItemListPresenterTest {
         argumentCaptor.getValue().onDataNotAvailable();
         verify(view).showLoadingItemsError();
     }
+
+    /**
+     * Helper method to create a basic list of items to show on the main list
+     * @return A list with dummy data
+     */
     public List<Item> getList(){
 
         ArrayList<Item> items = new ArrayList<>();

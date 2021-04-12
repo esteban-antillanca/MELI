@@ -9,7 +9,6 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 
 import com.eantillanca.melimasterdetailexample.itemDetail.ItemDetailActivity;
-import com.eantillanca.melimasterdetailexample.itemList.ItemListActivity;
 import com.eantillanca.melimasterdetailexample.util.EspressoIdlingResource;
 
 import org.junit.After;
@@ -19,7 +18,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -53,23 +51,23 @@ public class ItemDetailViewTest {
 
     @Test
     public void buyBtnCLick_shouldShowMessage() {
-        // Launch activity to add a new task
+        // Launch activity
         launchItemDetailActivity();
 
-        // Do empty search
+        // Try to buy
         onView(withId(R.id.button)).perform(click());
 
-        //Verify expected message to be shown
+        //Verify expected message to be shown. This app is just a demo, we can't buy anything here :)
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText(R.string.coming_soon_message)));
     }
 
     @Test
     public void progressBar_shouldNotBeVisible_afterItemLoad() {
-        // Launch activity to add a new task
+        // Launch activity
         launchItemDetailActivity();
 
-        //Verify expected message to be shown
+        //After proper loading, spinner should not ve visible
         onView(withId(R.id.loading_spinner))
                 .check(matches(not(isDisplayed())));
     }
@@ -87,7 +85,7 @@ public class ItemDetailViewTest {
     public void noResults_showError() {
 
         launchItemDetailActivity();
-
+        //Securing a query with no results
         onView(withId(R.id.search_edit_text)).perform(replaceText("mnbbccxksjsjgiwieir"), pressImeActionButton());
 
         onView(withId(R.id.img_no_results))

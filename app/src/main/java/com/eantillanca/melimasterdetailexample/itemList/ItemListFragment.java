@@ -38,6 +38,9 @@ import static com.eantillanca.melimasterdetailexample.Constants.CURRENT_ITEM;
 
 /**
  * Created by Esteban Antillanca on 2021-03-29.
+ * This class represents the View in the Item list feature of the app. It will handle de user interaction, passing that data
+ * to the presenter in order to process. It consists mainly on a search bar and a list, that will be populated
+ * with the data that matches the user query
  */
 public class ItemListFragment extends Fragment implements ItemListContract.View {
 
@@ -94,6 +97,9 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
         mPresenter = checkNotNull(presenter);
     }
 
+    /**
+     * Basic UI elements instantiation
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -129,6 +135,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
+    /**
+     *
+     * @param items will always step on the previous results, if any.
+     */
     @Override
     public void showItems(List<Item> items) {
         mListAdapter.replaceData(items);
@@ -162,6 +172,11 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
+    /**
+     *
+     * @param itemID of the Item that we are going to expand into details in a new Activity
+     * @param sellerID of the Seller that we are going to expand with more details in the next screen
+     */
     @Override
     public void showItemDetail(String itemID, String sellerID) {
 
@@ -187,7 +202,10 @@ public class ItemListFragment extends Fragment implements ItemListContract.View 
 
     }
 
-
+    /**
+     * Standard Adapter to use with a RecyclerVIew, that is the actual list of items. It includes ViewHolder pattern,
+     * and image lazy loading by using Glide.
+     */
     private static class ItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<Item> mItems;

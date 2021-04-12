@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * Created by Esteban Antillanca on 2020-01-08.
+ * Basic contract for a repository pattern implementation. This allows to use a single-source-of-truth and also
+ * enabling a future enhancement with local storage, for example. In this version of the app, only remote data is used.
  */
 public interface ItemDataSource {
 

@@ -7,6 +7,7 @@ import static com.eantillanca.melimasterdetailexample.Constants.BASE_URL;
 
 /**
  * Created by Esteban Antillanca on 2020-01-08.
+ * Basic singleton instance for using the repository pattern. Retrofit is the tool selected for the remote data access
  */
 public class RetrofitInstance {
 

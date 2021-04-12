@@ -9,6 +9,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Esteban Antillanca on 2020-01-14.
+ * Simple implementation for mocking asynchronous data fetching by using counters, in order to create
+ * instrumentation tests.
  */
 public final class SimpleCountingIdlingResource implements IdlingResource {
 

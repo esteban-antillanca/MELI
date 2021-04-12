@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Esteban Antillanca on 2020-01-08.
+ * POJO for the Item List object, that will be used for listing items after the user inputs a query
  */
 public final class Item   {
 

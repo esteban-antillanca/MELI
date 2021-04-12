@@ -51,12 +51,16 @@ public class ItemListViewTest {
     public void emptySearch_showError() {
         launchSearchItemActivity();
 
+        //Perform an empty query
         onView(withId(R.id.search_edit_text)).perform(clearText(), pressImeActionButton());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText(R.string.no_empty_search)));
     }
 
+    /**
+     * Helper method to setup the Activity to be tested.
+     */
     private void launchSearchItemActivity() {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(),
                 ItemListActivity.class);

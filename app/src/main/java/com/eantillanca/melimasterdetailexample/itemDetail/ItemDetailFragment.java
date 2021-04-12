@@ -32,6 +32,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Esteban Antillanca on 4/3/21.
+ * This class represent the View in the MVP pattern for the Item Detail feature. It will show the details of the product
+ * selected in the Item List feature, passing user interaction data to the companion presenter.
  */
 public class ItemDetailFragment extends Fragment implements ItemDetailContract.View{
 
@@ -128,6 +130,9 @@ public class ItemDetailFragment extends Fragment implements ItemDetailContract.V
 
     }
 
+    /**
+     * This adapter enable this view to use a Sliding View, to show multiple images of the given item in a carousel-like view
+     */
     public static class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterViewHolder> {
 
         // list for storing urls of images.

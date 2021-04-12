@@ -1,8 +1,5 @@
 package com.eantillanca.melimasterdetailexample.itemList;
 
-
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 
 import com.eantillanca.melimasterdetailexample.data.Item;
@@ -16,6 +13,8 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
 /**
  * Created by Esteban Antillanca on 2021-03-29.
+ * Implementation class for the ItemList presenter. This class will handle the inputs from the ItemList view, request access to the
+ * data repository and handle back to the view.
  */
 public class ItemListPresenter implements ItemListContract.Presenter {
 

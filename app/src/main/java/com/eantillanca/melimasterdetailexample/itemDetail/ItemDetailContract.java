@@ -11,6 +11,9 @@ import java.util.List;
 
 /**
  * Created by Esteban Antillanca on 4/3/21.
+ * /**
+ *  * This is the contract between view and presenter of the Item Detail feature
+ *
  */
 public interface ItemDetailContract {
 
